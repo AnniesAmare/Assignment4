@@ -12,7 +12,7 @@ namespace Assignment4.Tests
         private const string ProductsApi = "http://localhost:5001/api/products";
 
         /* /api/categories */
-#if COMMENT
+
         public void ApiCategories_GetWithNoArguments_OkAndAllCategories()
         {
             var (data, statusCode) = GetArray(CategoriesApi);
@@ -124,6 +124,8 @@ namespace Assignment4.Tests
 
             Assert.Equal(HttpStatusCode.NotFound, statusCode);
         }
+
+#if COMMENT
 
         /* /api/products */
 

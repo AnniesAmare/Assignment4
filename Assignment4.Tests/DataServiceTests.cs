@@ -1,11 +1,12 @@
 using DataLayer;
+using DataLayer.Model;
 
 namespace Assignment4.Tests
 {
     public class DataServiceTests
     {
         /* Categories */
-#if COMMENT
+
         [Fact]
         public void Category_Object_HasIdNameAndDescription()
         {
@@ -166,6 +167,7 @@ namespace Assignment4.Tests
         }
 
 
+
         /* orderdetails */
         [Fact]
         public void OrderDetails_Object_HasOrderProductUnitPriceQuantityAndDiscount()
@@ -201,6 +203,6 @@ namespace Assignment4.Tests
             Assert.Equal(14, orderDetails.First().UnitPrice);
             Assert.Equal(12, orderDetails.First().Quantity);
         }
-#endif
+
     }
 }

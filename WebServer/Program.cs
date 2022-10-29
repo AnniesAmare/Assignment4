@@ -1,6 +1,20 @@
+using DataLayer;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
 
+//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddSingleton<IDataService, DataService>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+var app = builder.Build();
+
+app.MapControllers();
+
+app.Run();
+/*
 // Add services to the container.
 builder.Services.AddMvcCore();
 
@@ -15,3 +29,4 @@ if (!app.Environment.IsDevelopment())
 app.UseRouting();
 app.MapControllers();
 app.Run();
+*/
