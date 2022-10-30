@@ -37,7 +37,7 @@ namespace WebServer.Controllers
             var product = _dataService.GetProductByName(search);
             if (product.Count == 0)
             {
-                return NotFound();
+                return NotFound(product);
             }
             return Ok(product);
         }
@@ -48,7 +48,7 @@ namespace WebServer.Controllers
             var product = _dataService.GetProductByCategory(id);
             if (product.Count == 0)
             {
-                return NotFound();
+                return NotFound(product);
             }
             return Ok(product);
         }
