@@ -6,6 +6,7 @@ namespace DataLayer
     public partial class DataService : IDataService
     {
         //CATEGORIES
+        //Get all categories
         public IList<Category> GetCategories()
         {
             using var db = new NorthwindContext();
@@ -21,6 +22,7 @@ namespace DataLayer
             return result;
         }
 
+        //Get category by id
         public Category? GetCategory(int Id)
         {
             using var db = new NorthwindContext();
@@ -29,6 +31,7 @@ namespace DataLayer
             return null;
         }
 
+        //Create a category and return the new category
         public Category CreateCategory(string name, string description)
         {
             using var db = new NorthwindContext();
@@ -44,6 +47,7 @@ namespace DataLayer
             return newCategory;
         }
 
+        //Deletes a category and returns true on success, false on failure.
         public bool DeleteCategory(int Id)
         {
             using var db = new NorthwindContext();
@@ -60,6 +64,7 @@ namespace DataLayer
             }
         }
 
+        //Updates a category and returns true on success, false on failure
         public bool UpdateCategory(int Id, string updatedName, string updatedDescription)
         {
             using var db = new NorthwindContext();
@@ -139,11 +144,11 @@ namespace DataLayer
             return db.Orders.ToList();
         }
 
+        //Returns the complete order by Id
         public Order? GetOrder(int Id)
         {
             Order result = null;
             using var db = new NorthwindContext();
-
             foreach (var order in db
                          .Orders
                          .Include(x => x.OrderDetails)

@@ -13,11 +13,10 @@ namespace WebServer.Models.Profiles
             CreateMap<Category, CategoryModel>();
             //CreateMap<Category, CategoryCreateModel>().ReverseMap(); //Makes it possible to convert in both directions.
             CreateMap<Category, CategoryCreateModel>();
+            /*
             CreateMap<Category, CategoryUpdateModel>()
-                .ForMember(dst => dst.Id,
-                    opt => opt.MapFrom(src => src.Id));
-
-
+                .ForMember(dst => dst.Id, opt => opt.MapFrom(src => src.Id));
+            */
         }
     }
 

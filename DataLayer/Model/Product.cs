@@ -11,16 +11,13 @@ namespace DataLayer.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int UnitPrice { get; set; }
+        public string QuantityPerUnit { get; set; }
+        public int UnitsInStock { get; set; }
 
-        //public int SupplierId { get; set; }
-        //public Supplier Supplier { get; set; }
-
+        //CATEGORY
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-
-        public string QuantityPerUnit { get; set; }
-        public int UnitPrice { get; set; }
-        public int UnitsInStock { get; set; }
 
     }
 }

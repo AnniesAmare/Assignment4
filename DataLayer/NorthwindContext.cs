@@ -43,7 +43,9 @@ namespace DataLayer
             modelBuilder.Entity<Order>().Property(x => x.Id).HasColumnName("orderid");
             modelBuilder.Entity<Order>().Property(x => x.Date).HasColumnName("orderdate");
             modelBuilder.Entity<Order>().Property(x => x.Required).HasColumnName("requireddate");
+            modelBuilder.Entity<Order>().Property(x => x.Shipped).HasColumnName("shippeddate");
             modelBuilder.Entity<Order>().Property(x => x.ShipName).HasColumnName("shipname");
+            modelBuilder.Entity<Order>().Property(x => x.Freight).HasColumnName("freight");
             modelBuilder.Entity<Order>().Property(x => x.ShipCity).HasColumnName("shipcity");
 
             //ORDER DETAIL MAPPING
