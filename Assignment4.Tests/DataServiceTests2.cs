@@ -1,4 +1,5 @@
-﻿using DataLayer.Model;
+﻿using DataLayer;
+using DataLayer.Model;
 
 namespace Assignment4.Tests
 {
@@ -7,12 +8,16 @@ namespace Assignment4.Tests
 
         //ORDER TESTS EXTRA
         [Fact]
-        public void Category_Object_HasIdNameAndDescription()
+        public void GetOrderByShipname_ValidShipname_ReturnsIdDateShipnameCity()
         {
-            var category = new Category();
-            Assert.Equal(0, category.Id);
-            Assert.Null(category.Name);
-            Assert.Null(category.Description);
+            var service = new DataService();
+            var order = service.GetOrderByShipping("Blauer See Delikatessen");
+            Assert.Equal(7, order.Count);
+            Assert.Equal("Mannheim", order.First().City);
+            Assert.Equal(10501, order.First().Id);
+            Assert.Equal("Blauer See Delikatessen", order.First().ShipName);
+            Assert.Equal("1997-04-09", order.First().Date.ToString("yyyy-MM-dd"));
+
         }
 
 

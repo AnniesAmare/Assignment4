@@ -1,10 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataLayer.DataTransferModel;
+using Microsoft.EntityFrameworkCore;
 using DataLayer.Model;
+using AutoMapper;
 
 namespace DataLayer
 {
     public partial class DataService : IDataService
     {
+
         //CATEGORIES
         //Get all categories
         public IList<Category> GetCategories()
@@ -83,20 +86,22 @@ namespace DataLayer
         }
 
         //PRODUCTS
-        public Product? GetProduct(int Id)
+        //Get a single product by id
+        public Product? GetProduct(int id)
         {
             Product result = null;
             using var db = new NorthwindContext();
             foreach (var product in db
                         .Products
                         .Include(x => x.Category)
-                        .Where(x => x.Id == Id))
+                        .Where(x => x.Id == id))
             {
                 result = product;
             }
             return result;
         }
 
+        //get a list of products by category id
         public IList<ProductByCategoryListElement>? GetProductByCategory(int inputCategoryId)
         {
             using var db = new NorthwindContext();
@@ -107,16 +112,13 @@ namespace DataLayer
                          .Include(x => x.Category)
                          .Where(x => x.CategoryId == inputCategoryId))
             {
-                var newProduct = new ProductByCategoryListElement
-                {
-                    Name = product.Name,
-                    CategoryName = product.Category.Name
-                };
+                var newProduct = ObjectMapper.Mapper.Map<ProductByCategoryListElement>(product);
                 result.Add(newProduct);
             }
             return result;
         }
 
+        //get a list of products that contains a substring
         public IList<ProductByNameListElement>? GetProductByName(string searchString)
         {
             using var db = new NorthwindContext();
@@ -127,24 +129,14 @@ namespace DataLayer
                          .Include(x => x.Category)
                          .Where(x => x.Name.Contains(searchString)))
             {
-                var newProduct = new ProductByNameListElement
-                {
-                    ProductName = product.Name,
-                    CategoryName = product.Category.Name
-                };
+                var newProduct = ObjectMapper.Mapper.Map<ProductByNameListElement>(product);
                 result.Add(newProduct);
             }
             return result;
         }
 
         //ORDERS
-        public IList<Order> GetOrders()
-        {
-            using var db = new NorthwindContext();
-            return db.Orders.ToList();
-        }
-
-        //Returns the complete order by Id
+        //get the complete order by id
         public Order? GetOrder(int Id)
         {
             Order result = null;
@@ -161,35 +153,66 @@ namespace DataLayer
             return result;
         }
 
-        //ORDERDETAILS
-        public IList<OrderDetails>? GetOrderDetailsByOrderId(int Id)
+        //list all orders
+        public IList<OrderListElement> GetOrders()
         {
             using var db = new NorthwindContext();
-            var result = new List<OrderDetails>();
-
-            foreach (var orderDetails in db
-                         .OrderDetails
-                         .Include(x => x.Product)
-                         .Where(x => x.OrderId == Id))
+            var result = new List<OrderListElement>();
+            foreach (var order in db.Orders)
             {
-                result.Add(orderDetails);
+                var newOrder = ObjectMapper.Mapper.Map<OrderListElement>(order);
+                result.Add(newOrder);
             }
             return result;
         }
 
-        public IList<OrderDetails>? GetOrderDetailsByProductId(int Id)
+
+        //get order by shipName name
+        public IList<OrderListElement> GetOrderByShipping(string shipName)
         {
             using var db = new NorthwindContext();
-            var result = new List<OrderDetails>();
+            var result = new List<OrderListElement>();
+            foreach (var order in db.Orders
+                         .Where(x => x.ShipName.Contains(shipName)))
+            {
+                var newOrder = ObjectMapper.Mapper.Map<OrderListElement>(order);
+                result.Add(newOrder);
+            }
+            return result;
+        }
+        
+
+        //ORDERDETAILS
+        public IList<OrderDetailsByIdListElement>? GetOrderDetailsByOrderId(int id)
+        {
+            using var db = new NorthwindContext();
+            var result = new List<OrderDetailsByIdListElement>();
+
+            foreach (var orderDetails in db
+                         .OrderDetails
+                         .Include(x => x.Product)
+                         .Where(x => x.OrderId == id))
+            {
+                var newOrderDetails = ObjectMapper.Mapper.Map<OrderDetailsByIdListElement>(orderDetails);
+                result.Add(newOrderDetails);
+            }
+            return result;
+        }
+
+        public IList<OrderDetailsByProductIdListElement>? GetOrderDetailsByProductId(int id)
+        {
+            using var db = new NorthwindContext();
+            var result = new List<OrderDetailsByProductIdListElement>();
 
             foreach (var orderDetails in db
                          .OrderDetails
                          .Include(x => x.Product)
                          .Include(x => x.Order)
-                         .Where(x => x.ProductId == Id)
+                         .Where(x => x.ProductId == id)
                          .OrderBy(x => x.UnitPrice))
             {
-                result.Add(orderDetails);
+                var newOrderDetails = ObjectMapper.Mapper.Map<OrderDetailsByProductIdListElement>(orderDetails);
+                result.Add(newOrderDetails);
             }
             return result;
         }

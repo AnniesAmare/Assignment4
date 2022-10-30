@@ -1,6 +1,4 @@
-﻿namespace DataLayer;
-
-public partial class DataService
+﻿namespace DataLayer
 {
     public class ProductByCategoryListElement
     {
