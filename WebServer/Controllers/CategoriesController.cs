@@ -63,7 +63,7 @@ namespace WebServer.Controllers
                 }
                 return Ok();
             }
-            return BadRequest();
+            return BadRequest(); //returns bad request if input id and model.id isn't the same
         }
 
         [HttpDelete("{id}")]
@@ -83,15 +83,6 @@ namespace WebServer.Controllers
             //maps a Category-object to a CategoryModel.
             var model = _mapper.Map<CategoryModel>(category);
             model.Url = _generator.GetUriByName(HttpContext, nameof(GetCategory), new { category.Id });
-/*
-            var model = new CategoryModel
-            {
-                Url = _generator.GetUriByName(HttpContext, nameof(GetCategory), new { category.Id }),
-                Id = category.Id,
-                Name = category.Name, 
-                Description = category.Description
-            };
-*/
             return model;
         }
         

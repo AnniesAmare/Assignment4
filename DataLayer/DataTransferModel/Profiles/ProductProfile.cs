@@ -6,6 +6,7 @@ public class ProductProfile : Profile
 {
     public ProductProfile()
     {
+        CreateMap<Product, ProductElement>();
 
         CreateMap<Product, ProductByCategoryListElement>()
             .ForMember(dst => dst.CategoryName, 

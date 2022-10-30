@@ -87,16 +87,16 @@ namespace DataLayer
 
         //PRODUCTS
         //Get a single product by id
-        public Product? GetProduct(int id)
+        public ProductElement? GetProduct(int id)
         {
-            Product result = null;
+            ProductElement result = null;
             using var db = new NorthwindContext();
             foreach (var product in db
                         .Products
                         .Include(x => x.Category)
                         .Where(x => x.Id == id))
             {
-                result = product;
+                result = ObjectMapper.Mapper.Map<ProductElement>(product);
             }
             return result;
         }

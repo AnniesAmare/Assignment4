@@ -8,7 +8,7 @@ namespace DataLayer
     {
 
         //PRODUCTS
-        Product? GetProduct(int id);
+        ProductElement? GetProduct(int id);
         IList<ProductByCategoryListElement>? GetProductByCategory(int inputCategoryId);
         IList<ProductByNameListElement>? GetProductByName(string searchString);
 
